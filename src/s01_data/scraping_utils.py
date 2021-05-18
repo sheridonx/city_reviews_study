@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 from os import path
 from datetime import datetime
+import pickle
 
 CITY_DIMENSION_LABEL = {
      'Environnement': 'environment',
@@ -53,3 +54,13 @@ def retrieve_review_data(review_block):
         'count_disagree': int(vote_counts[1].text)
     }
     return d_review
+
+def proceed_to_next_page(driver):
+    """
+    redirect to the next review page if any.
+    """
+    try:
+        driver.find_element_by_xpath('//a[starts-with(.,"Suivant")]').click()
+        return True
+    except:
+        return False
